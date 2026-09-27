@@ -1,12 +1,22 @@
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+} from "react-router-dom";
 
-import Accueil from "./pages/accueil";
-import Personnages from "./pages/personnages";
-import Selection from "./pages/selection";
-import PersonnageDetail from "./pages/PersonnageDetail";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/NotFound";
+import { lazy, Suspense } from "react";
+
 import { SelectionProvider } from "./Context/selectioncontext";
+
+const Accueil = lazy(() => import("./pages/accueil"));
+const Personnages = lazy(() => import("./pages/personnages"));
+const Selection = lazy(() => import("./pages/selection"));
+const PersonnageDetail = lazy(
+  () => import("./pages/PersonnageDetail")
+);
+const Contact = lazy(() => import("./pages/Contact"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   return (
@@ -19,22 +29,36 @@ function App() {
           <NavLink to="/contact">Contact</NavLink>
         </nav>
 
-        <Routes>
-          <Route path="/" element={<Accueil />} />
+        <Suspense fallback={<p>Chargement...</p>}>
+          <Routes>
+            <Route path="/" element={<Accueil />} />
 
-          <Route path="/personnages" element={<Personnages />} />
+            <Route
+              path="/personnages"
+              element={<Personnages />}
+            />
 
-          <Route
-            path="/personnages/:id"
-            element={<PersonnageDetail />}
-          />
+            <Route
+              path="/personnages/:id"
+              element={<PersonnageDetail />}
+            />
 
-          <Route path="/selection" element={<Selection />} />
+            <Route
+              path="/selection"
+              element={<Selection />}
+            />
 
-          <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/contact"
+              element={<Contact />}
+            />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
+          </Routes>
+        </Suspense>
       </SelectionProvider>
     </BrowserRouter>
   );
