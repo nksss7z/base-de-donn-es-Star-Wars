@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { Personnage, ReponsePersonnages } from "../types/starwars";
-import { useSelection } from "../context/SelectionContext";
+import type {
+  Personnage,
+  ReponsePersonnages,
+} from "../types/starwars";
+import { useSelection } from "../Context/SelectionContext";
 
 function Personnages() {
   const [personnages, setPersonnages] = useState<Personnage[]>([]);
@@ -17,7 +20,9 @@ function Personnages() {
   } = useSelection();
 
   useEffect(() => {
-    fetch("https://www.swapi.tech/api/people?page=1&limit=12")
+    fetch(
+      "https://www.swapi.tech/api/people?page=1&limit=12"
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error();
@@ -29,29 +34,39 @@ function Personnages() {
         setPersonnages(data.results);
       })
       .catch(() => {
-        setError("Impossible de charger les personnages.");
+        setError(
+          "Impossible de charger les personnages."
+        );
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
 
-  const personnagesFiltres = personnages.filter((personnage) => {
-    const correspondRecherche = personnage.name
-      .toLowerCase()
-      .includes(recherche.toLowerCase());
+  const personnagesFiltres = personnages.filter(
+    (personnage) => {
+      const correspondRecherche =
+        personnage.name
+          .toLowerCase()
+          .includes(recherche.toLowerCase());
 
-    const correspondLettre =
-      lettre === "" ||
-      personnage.name
-        .toLowerCase()
-        .startsWith(lettre.toLowerCase());
+      const correspondLettre =
+        lettre === "" ||
+        personnage.name
+          .toLowerCase()
+          .startsWith(lettre.toLowerCase());
 
-    return correspondRecherche && correspondLettre;
-  });
+      return (
+        correspondRecherche &&
+        correspondLettre
+      );
+    }
+  );
 
   if (loading) {
-    return <p>Chargement des personnages...</p>;
+    return (
+      <p>Chargement des personnages...</p>
+    );
   }
 
   if (error) {
@@ -66,14 +81,20 @@ function Personnages() {
         type="text"
         placeholder="Rechercher un personnage..."
         value={recherche}
-        onChange={(event) => setRecherche(event.target.value)}
+        onChange={(event) =>
+          setRecherche(event.target.value)
+        }
       />
 
       <select
         value={lettre}
-        onChange={(event) => setLettre(event.target.value)}
+        onChange={(event) =>
+          setLettre(event.target.value)
+        }
       >
-        <option value="">Toutes les lettres</option>
+        <option value="">
+          Toutes les lettres
+        </option>
         <option value="a">A</option>
         <option value="b">B</option>
         <option value="c">C</option>
@@ -86,13 +107,16 @@ function Personnages() {
         <p>Aucun personnage trouvé.</p>
       ) : (
         personnagesFiltres.map((personnage) => {
-          const selectionne = estSelectionne(personnage.uid);
+          const selectionne =
+            estSelectionne(personnage.uid);
 
           return (
             <div key={personnage.uid}>
               <h2>{personnage.name}</h2>
 
-              <Link to={`/personnages/${personnage.uid}`}>
+              <Link
+                to={`/personnages/${personnage.uid}`}
+              >
                 Voir le détail
               </Link>
 
@@ -101,7 +125,9 @@ function Personnages() {
               <button
                 onClick={() => {
                   if (selectionne) {
-                    retirerSelection(personnage.uid);
+                    retirerSelection(
+                      personnage.uid
+                    );
                   } else {
                     ajouterSelection(personnage);
                   }

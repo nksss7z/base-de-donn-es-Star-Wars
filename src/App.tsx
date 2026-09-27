@@ -6,7 +6,7 @@ import Selection from "./pages/Selection";
 import PersonnageDetail from "./pages/PersonnageDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import { SelectionProvider } from "./context/SelectionContext";
+import { SelectionProvider } from "./Context/SelectionContext";
 
 function App() {
   return (

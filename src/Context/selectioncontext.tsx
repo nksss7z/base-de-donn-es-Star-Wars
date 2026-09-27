@@ -16,7 +16,9 @@ interface SelectionProviderProps {
   children: ReactNode;
 }
 
-export function SelectionProvider({ children }: SelectionProviderProps) {
+export function SelectionProvider({
+  children,
+}: SelectionProviderProps) {
   const [selection, setSelection] = useState<Personnage[]>([]);
 
   const ajouterSelection = (personnage: Personnage) => {
@@ -43,7 +45,9 @@ export function SelectionProvider({ children }: SelectionProviderProps) {
   };
 
   const estSelectionne = (uid: string) => {
-    return selection.some((personnage) => personnage.uid === uid);
+    return selection.some(
+      (personnage) => personnage.uid === uid
+    );
   };
 
   return (
