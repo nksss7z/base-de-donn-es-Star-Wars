@@ -1,79 +1,77 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# Star Wars App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application web React + TypeScript permettant de consulter des personnages de l'univers Star Wars grâce à l'API SWAPI.tech.
 
-Currently, two official plugins are available:
+## Technologies utilisées
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- TypeScript
+- Vite
+- React Router
+- SWAPI.tech
+- Vitest
+- Testing Library
 
-## React Compiler
+## Fonctionnalités
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+L'application permet de :
 
-## Expanding the ESLint configuration
+- consulter la liste des personnages Star Wars ;
+- rechercher un personnage ;
+- filtrer les personnages ;
+- consulter le détail d'un personnage ;
+- ajouter des personnages à une sélection ;
+- retirer des personnages de la sélection ;
+- utiliser la sélection depuis plusieurs pages grâce au Context ;
+- envoyer un formulaire de contact ;
+- gérer les erreurs de l'API ;
+- afficher un état de chargement ;
+- gérer les routes inexistantes avec une page 404.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## API
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Les personnages sont récupérés depuis l'API SWAPI.tech.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Les données sont chargées depuis l'API et affichées dans l'application React.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tests
 
-```
+Les tests sont réalisés avec Vitest et Testing Library.
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+La suite contient 8 tests couvrant notamment :
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- l'affichage des personnages ;
+- le chargement ;
+- la gestion d'une erreur API ;
+- la recherche ;
+- le filtrage ;
+- l'affichage du formulaire Contact ;
+- l'envoi du formulaire ;
+- l'ajout et la suppression d'un personnage dans la sélection.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Résultat actuel :
 
-```
-=======
-# base-de-donn-es-Star-Wars
->>>>>>> 98a6f1e9fab9e4d843b812a62196a2d9a7f4a243
+**8 tests réussis sur 8.**
+
+## Optimisation
+
+Un lazy loading des pages a été ajouté avec `React.lazy()` et `Suspense`.
+
+Avant optimisation :
+
+- JavaScript principal : 264,47 kB
+- Gzip : 83,67 kB
+
+Après optimisation :
+
+- JavaScript principal : 260,43 kB
+- Gzip : 82,74 kB
+
+Les différentes pages sont maintenant chargées séparément.
+
+## Installation
+
+Installer les dépendances :
+
+```bash
+npm install
