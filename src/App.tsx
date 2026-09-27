@@ -1,30 +1,26 @@
-import { useEffect, useState } from "react";
-import type { Personnage, ReponsePersonnages } from "./types/starwars";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+
+import Accueil from "./pages/Accueil";
+import Personnages from "./pages/Personnages";
+import Selection from "./pages/Selection";
+import NotFound from "./pages/NotFound";
 
 function App() {
-  const [personnages, setPersonnages] = useState<Personnage[]>([]);
-
-  useEffect(() => {
-    fetch("https://www.swapi.tech/api/people?page=1&limit=12")
-      .then((response) => response.json())
-      .then((data: ReponsePersonnages) => {
-        setPersonnages(data.results);
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>Star Wars</h1>
-      <p>Catalogue de personnages Star Wars</p>
+    <BrowserRouter>
+      <nav>
+        <NavLink to="/">Accueil</NavLink>{" "}
+        <NavLink to="/personnages">Personnages</NavLink>{" "}
+        <NavLink to="/selection">Ma sélection</NavLink>
+      </nav>
 
-      <h2>Personnages</h2>
-
-      {personnages.map((personnage) => (
-        <p key={personnage.uid}>
-          {personnage.name}
-        </p>
-      ))}
-    </div>
+      <Routes>
+        <Route path="/" element={<Accueil />} />
+        <Route path="/personnages" element={<Personnages />} />
+        <Route path="/selection" element={<Selection />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
