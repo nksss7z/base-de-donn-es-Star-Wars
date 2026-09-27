@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
-import Accueil from "./pages/Accueil";
-import Personnages from "./pages/Personnages";
-import Selection from "./pages/Selection";
+import Accueil from "./pages/accueil";
+import Personnages from "./pages/personnages";
+import Selection from "./pages/selection";
 import PersonnageDetail from "./pages/PersonnageDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import { SelectionProvider } from "./Context/SelectionContext";
+import { SelectionProvider } from "./Context/selectioncontext";
 
 function App() {
   return (

@@ -15,13 +15,13 @@ import userEvent from "@testing-library/user-event";
 
 import { BrowserRouter } from "react-router-dom";
 
-import Personnages from "../pages/Personnages";
+import Personnages from "../pages/personnages";
 import Contact from "../pages/Contact";
 
 import {
   SelectionProvider,
   useSelection,
-} from "../Context/SelectionContext";
+} from "../Context/selectioncontext";
 
 const personnages = [
   {
@@ -73,14 +73,12 @@ describe("Personnages", () => {
     );
 
     expect(
-      await screen.findByText(
-        "Luke Skywalker"
-      )
-    ).toBeInTheDocument();
+      await screen.findByText("Luke Skywalker")
+    ).toBeTruthy();
 
     expect(
       screen.getByText("Darth Vader")
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 
   test("2 - affiche le chargement", () => {
@@ -103,7 +101,7 @@ describe("Personnages", () => {
       screen.getByText(
         "Chargement des personnages..."
       )
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 
   test("3 - affiche une erreur", async () => {
@@ -126,7 +124,7 @@ describe("Personnages", () => {
       await screen.findByText(
         "Impossible de charger les personnages."
       )
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 
   test("4 - recherche un personnage", async () => {
@@ -163,13 +161,13 @@ describe("Personnages", () => {
       screen.getByText(
         "Luke Skywalker"
       )
-    ).toBeInTheDocument();
+    ).toBeTruthy();
 
     expect(
       screen.queryByText(
         "Darth Vader"
       )
-    ).not.toBeInTheDocument();
+    ).toBeNull();
   });
 
   test("5 - filtre par lettre", async () => {
@@ -207,13 +205,13 @@ describe("Personnages", () => {
       screen.getByText(
         "Luke Skywalker"
       )
-    ).toBeInTheDocument();
+    ).toBeTruthy();
 
     expect(
       screen.queryByText(
         "Darth Vader"
       )
-    ).not.toBeInTheDocument();
+    ).toBeNull();
   });
 });
 
@@ -223,15 +221,15 @@ describe("Contact", () => {
 
     expect(
       screen.getByLabelText("Nom")
-    ).toBeInTheDocument();
+    ).toBeTruthy();
 
     expect(
       screen.getByLabelText("Email")
-    ).toBeInTheDocument();
+    ).toBeTruthy();
 
     expect(
       screen.getByLabelText("Message")
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 
   test("7 - affiche le message de succès", async () => {
@@ -264,7 +262,7 @@ describe("Contact", () => {
       screen.getByText(
         "Votre message a bien été envoyé !"
       )
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 });
 
@@ -314,7 +312,7 @@ describe("Selection", () => {
 
     expect(
       screen.getByText("0")
-    ).toBeInTheDocument();
+    ).toBeTruthy();
 
     await user.click(
       screen.getByRole("button", {
@@ -324,7 +322,7 @@ describe("Selection", () => {
 
     expect(
       screen.getByText("1")
-    ).toBeInTheDocument();
+    ).toBeTruthy();
 
     await user.click(
       screen.getByRole("button", {
@@ -334,6 +332,6 @@ describe("Selection", () => {
 
     expect(
       screen.getByText("0")
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 });

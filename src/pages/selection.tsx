@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useSelection } from "../Context/SelectionContext";
+import { useSelection } from "../Context/selectioncontext";
 
 function Selection() {
   const {

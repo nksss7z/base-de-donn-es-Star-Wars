@@ -4,7 +4,7 @@ import type {
   Personnage,
   ReponsePersonnages,
 } from "../types/starwars";
-import { useSelection } from "../Context/SelectionContext";
+import { useSelection } from "../Context/selectioncontext";
 
 function Personnages() {
   const [personnages, setPersonnages] = useState<Personnage[]>([]);
