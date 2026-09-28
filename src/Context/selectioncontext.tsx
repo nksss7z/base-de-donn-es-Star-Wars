@@ -1,77 +1,60 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
-import type { Personnage } from "../types/starwars";
+import { createContext, useContext, useState, type ReactNode } from 'react';
+
+export interface SelectedCharacter {
+  id?: string;
+  uid?: string;
+  name: string;
+  birth_year?: string;
+  gender?: string;
+  url?: string;
+  [key: string]: any;
+}
 
 interface SelectionContextType {
-  selection: Personnage[];
-  ajouterSelection: (personnage: Personnage) => void;
-  retirerSelection: (uid: string) => void;
-  estSelectionne: (uid: string) => boolean;
+  selection: SelectedCharacter[];
+  ajouterSelection: (item: SelectedCharacter) => void;
+  retirerSelection: (id: string) => void;
+  clearSelection: () => void;
 }
 
-const SelectionContext = createContext<SelectionContextType | undefined>(
-  undefined
-);
+const SelectionContext = createContext<SelectionContextType | undefined>(undefined);
 
-interface SelectionProviderProps {
-  children: ReactNode;
-}
+export const SelectionProvider = ({ children }: { children: ReactNode }) => {
+  const [selection, setSelection] = useState<SelectedCharacter[]>([]);
 
-export function SelectionProvider({
-  children,
-}: SelectionProviderProps) {
-  const [selection, setSelection] = useState<Personnage[]>([]);
-
-  const ajouterSelection = (personnage: Personnage) => {
-    setSelection((ancienneSelection) => {
-      if (
-        ancienneSelection.some(
-          (personnageSelectionne) =>
-            personnageSelectionne.uid === personnage.uid
-        )
-      ) {
-        return ancienneSelection;
+  const ajouterSelection = (item: SelectedCharacter) => {
+    setSelection((prev) => {
+      const itemId = String(item.id || item.uid || '');
+      if (prev.some((char) => String(char.id || char.uid) === itemId)) {
+        return prev;
       }
-
-      return [...ancienneSelection, personnage];
+      return [...prev, { ...item, id: itemId, uid: itemId }];
     });
   };
 
-  const retirerSelection = (uid: string) => {
-    setSelection((ancienneSelection) =>
-      ancienneSelection.filter(
-        (personnage) => personnage.uid !== uid
-      )
+  const retirerSelection = (id: string) => {
+    setSelection((prev) =>
+      prev.filter((char) => String(char.id || char.uid) !== String(id))
     );
   };
 
-  const estSelectionne = (uid: string) => {
-    return selection.some(
-      (personnage) => personnage.uid === uid
-    );
+  const clearSelection = () => {
+    setSelection([]);
   };
 
   return (
     <SelectionContext.Provider
-      value={{
-        selection,
-        ajouterSelection,
-        retirerSelection,
-        estSelectionne,
-      }}
+      value={{ selection, ajouterSelection, retirerSelection, clearSelection }}
     >
       {children}
     </SelectionContext.Provider>
   );
-}
+};
 
-export function useSelection() {
+export const useSelection = () => {
   const context = useContext(SelectionContext);
-
-  if (context === undefined) {
-    throw new Error(
-      "useSelection doit être utilisé dans un SelectionProvider"
-    );
+  if (!context) {
+    throw new Error("useSelection doit être utilisé dans un SelectionProvider");
   }
-
   return context;
-}
+};
